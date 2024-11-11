@@ -24,7 +24,7 @@ public class User {
     private Long kakaoId;
 
     @Column(nullable = false)
-    private String nickname;
+    private String username;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

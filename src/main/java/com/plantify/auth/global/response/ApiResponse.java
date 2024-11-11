@@ -4,9 +4,7 @@ import lombok.*;
 import org.springframework.http.HttpStatus;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
 public class ApiResponse<T> {
     private HttpStatus status;
     private String message;

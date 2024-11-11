@@ -18,7 +18,7 @@ spring:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
@@ -26,10 +26,9 @@ oauth:
   kakao:
     client-id: ENC(Bt6eM/fhddJAPXSptpWF3mUjdR6Sf//6w6W9q65IOPS2dp7qOByivWaW5ljFqi7O)
     client-secret: ENC(UkF9iKVwNwfMRDbTqGrrotqxiG75OUOpr0x4z7C52hPBqvkghp5A7bwXdU/aekTD)
-    redirect-uri: ENC(lzFp0tqo1ESzLPhmxAtokcZNS82JlWYAZvOXF7XGwwrK39gSZyXUYRRFKe4SvOS5EpsLR/Tpkh4=)
+    redirect-uri: ENC(FpTmJ97F17HZmCRMxz1msOS5Sm2S/Myh0Je6xb46CEBXqqnbTx4eZA==)
 
 jwt:
   secret: ENC(bkvH+mRzgfeLK4bZDHmcbfa5etKqItNkUaXmRn7NIFALSTudUWKlDTinBnbU+JYECrp+l/qnofo=)
   access-token-expiration: ENC(ch/UXDWKupu5PnMpcI3DEg==)
   refresh-token-expiration: ENC(/T++6ZbhvDUhaZgscOQ/oKJZzHHk3VQ9)
-

@@ -8,8 +8,9 @@ import com.plantify.auth.domain.entity.User;
 public interface AuthService {
 
     LoginResponse login(String authorizationCode);
+    String resolveAccessToken(String authorizationHeader);
     String refreshAccessToken(String token);
     UserResponse getUserIdAndRoleFromToken(String token);
-    Long getUserIdFromToken(String token);
     User findOrCreateMember(KakaoInfoResponse response);
+    Long getUserIdFromToken(String token);
 }

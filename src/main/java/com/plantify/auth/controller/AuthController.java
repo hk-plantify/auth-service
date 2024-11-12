@@ -25,16 +25,14 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<String>> refreshAccessToken(
             @RequestHeader("Authorization") String authorizationHeader) {
-        String accessToken = authService.resolveAccessToken(authorizationHeader);
-        String newAccessToken = authService.refreshAccessToken(accessToken);
+        String newAccessToken = authService.refreshAccessToken(authorizationHeader);
         return ResponseEntity.ok(ApiResponse.ok(newAccessToken));
     }
 
     @PostMapping("/validate-token")
     public ResponseEntity<ApiResponse<UserResponse>> getUserInfo(
             @RequestHeader("Authorization") String authorizationHeader) {
-        String accessToken = authService.resolveAccessToken(authorizationHeader);
-        UserResponse userInfo = authService.getUserIdAndRoleFromToken(accessToken);
+        UserResponse userInfo = authService.getUserIdAndRoleFromToken(authorizationHeader);
         return ResponseEntity.ok(ApiResponse.ok(userInfo));
     }
 

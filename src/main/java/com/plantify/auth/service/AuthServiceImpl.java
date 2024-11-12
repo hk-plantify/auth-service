@@ -12,14 +12,12 @@ import com.plantify.auth.global.exception.errorcode.AuthErrorCode;
 import com.plantify.auth.global.exception.errorcode.UserErrorCode;
 import com.plantify.auth.jwt.JwtAuthProvider;
 import com.plantify.auth.repository.UserRepository;
-import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class AuthServiceImpl implements AuthService, TokenService {
 
     private final JwtAuthProvider jwtAuthProvider;
     private final KakaoApiClient kakaoApiClient;
@@ -46,13 +44,15 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String refreshAccessToken(String token) {
+    public String refreshAccessToken(String authorizationHeader) {
+        String token = resolveAccessToken(authorizationHeader);
         Long kakaoId = getUserIdFromToken(token);
         return jwtAuthProvider.createAccessToken(kakaoId);
     }
 
     @Override
-    public UserResponse getUserIdAndRoleFromToken(String token) {
+    public UserResponse getUserIdAndRoleFromToken(String authorizationHeader) {
+        String token = resolveAccessToken(authorizationHeader);
         Long kakaoId = getUserIdFromToken(token);
         User user = userRepository.findByKakaoId(kakaoId)
                 .orElseThrow(() -> new ApplicationException(UserErrorCode.USER_NOT_FOUND));

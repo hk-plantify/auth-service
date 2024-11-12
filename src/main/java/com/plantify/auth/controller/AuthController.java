@@ -1,6 +1,5 @@
 package com.plantify.auth.controller;
 
-import com.plantify.auth.domain.dto.request.UserRequest;
 import com.plantify.auth.domain.dto.response.LoginResponse;
 import com.plantify.auth.domain.dto.response.UserResponse;
 import com.plantify.auth.global.response.ApiResponse;
@@ -25,15 +24,17 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<String>> refreshAccessToken(
-            @RequestBody UserRequest request) {
-        String newAccessToken = authService.refreshAccessToken(request.token());
+            @RequestHeader("Authorization") String authorizationHeader) {
+        String accessToken = authService.resolveAccessToken(authorizationHeader);
+        String newAccessToken = authService.refreshAccessToken(accessToken);
         return ResponseEntity.ok(ApiResponse.ok(newAccessToken));
     }
 
     @PostMapping("/validate-token")
     public ResponseEntity<ApiResponse<UserResponse>> getUserInfo(
-            @RequestBody UserRequest request) {
-        UserResponse userInfo = authService.getUserIdAndRoleFromToken(request.token());
+            @RequestHeader("Authorization") String authorizationHeader) {
+        String accessToken = authService.resolveAccessToken(authorizationHeader);
+        UserResponse userInfo = authService.getUserIdAndRoleFromToken(accessToken);
         return ResponseEntity.ok(ApiResponse.ok(userInfo));
     }
 

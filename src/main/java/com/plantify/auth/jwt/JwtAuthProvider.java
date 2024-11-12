@@ -33,17 +33,17 @@ public class JwtAuthProvider {
         this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(long userId) {
-        return createToken(userId, "Access", accessTokenExpiration);
+    public String createAccessToken(long kakaoId) {
+        return createToken(kakaoId, "Access", accessTokenExpiration);
     }
 
-    public String createRefreshToken(long userId) {
-        return createToken(userId, "Refresh", refreshTokenExpiration);
+    public String createRefreshToken(long kakaoId) {
+        return createToken(kakaoId, "Refresh", refreshTokenExpiration);
     }
 
-    private String createToken(Long userId, String type, long tokenValidTime) {
+    private String createToken(Long kakaoId, String type, long tokenValidTime) {
         Claims claims = Jwts.claims().setSubject(type);
-        claims.put("userId", userId);
+        claims.put("kakaoId", kakaoId);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -78,13 +78,5 @@ public class JwtAuthProvider {
             log.error("Token validation failed: " + e.getMessage(), e);
             return false;
         }
-    }
-
-    public String resolveAccessToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 }

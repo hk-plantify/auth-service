@@ -1,4 +1,4 @@
-package com.plantify.auth.controller.client;
+package com.plantify.auth.client;
 
 import com.plantify.auth.domain.dto.response.KakaoInfoResponse;
 import com.plantify.auth.domain.dto.response.KakaoTokenResponse;

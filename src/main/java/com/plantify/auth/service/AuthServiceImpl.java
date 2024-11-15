@@ -1,6 +1,6 @@
 package com.plantify.auth.service;
 
-import com.plantify.auth.controller.client.KakaoApiClient;
+import com.plantify.auth.client.KakaoApiClient;
 import com.plantify.auth.domain.dto.response.KakaoInfoResponse;
 import com.plantify.auth.domain.dto.response.LoginResponse;
 import com.plantify.auth.domain.dto.response.KakaoTokenResponse;
@@ -29,8 +29,8 @@ public class AuthServiceImpl implements AuthService, TokenService {
         KakaoInfoResponse infoResponse = kakaoApiClient.requestKakaoUserInfo(tokenResponse.accessToken());
 
         User user = findOrCreateMember(infoResponse);
-        String accessToken = jwtAuthProvider.createAccessToken(user.getKakaoId());
-        String refreshToken = jwtAuthProvider.createRefreshToken(user.getKakaoId());
+        String accessToken = jwtAuthProvider.createAccessToken(user.getUserId());
+        String refreshToken = jwtAuthProvider.createRefreshToken(user.getUserId());
 
         return LoginResponse.from(user, accessToken, refreshToken);
     }
@@ -46,15 +46,15 @@ public class AuthServiceImpl implements AuthService, TokenService {
     @Override
     public String refreshAccessToken(String authorizationHeader) {
         String token = resolveAccessToken(authorizationHeader);
-        Long kakaoId = getUserIdFromToken(token);
-        return jwtAuthProvider.createAccessToken(kakaoId);
+        Long userId = getUserIdFromToken(token);
+        return jwtAuthProvider.createAccessToken(userId);
     }
 
     @Override
     public UserResponse getUserIdAndRoleFromToken(String authorizationHeader) {
         String token = resolveAccessToken(authorizationHeader);
-        Long kakaoId = getUserIdFromToken(token);
-        User user = userRepository.findByKakaoId(kakaoId)
+        Long userId = getUserIdFromToken(token);
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ApplicationException(UserErrorCode.USER_NOT_FOUND));
 
         return UserResponse.from(user);
@@ -67,7 +67,7 @@ public class AuthServiceImpl implements AuthService, TokenService {
             throw new ApplicationException(UserErrorCode.INVALID_USERNAME);
         }
 
-        return userRepository.findByKakaoId(response.id())
+        return userRepository.findById(response.id())
                 .orElseGet(() -> {
                     User newUser = User.builder()
                             .kakaoId(response.id())
@@ -83,6 +83,6 @@ public class AuthServiceImpl implements AuthService, TokenService {
         if (token == null || !jwtAuthProvider.validateToken(token)) {
             throw new ApplicationException(AuthErrorCode.INVALID_TOKEN);
         }
-        return jwtAuthProvider.getClaims(token).get("kakaoId", Long.class);
+        return jwtAuthProvider.getClaims(token).get("userId", Long.class);
     }
 }

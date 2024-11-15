@@ -33,17 +33,17 @@ public class JwtAuthProvider {
         this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(long kakaoId) {
-        return createToken(kakaoId, "Access", accessTokenExpiration);
+    public String createAccessToken(long userId) {
+        return createToken(userId, "Access", accessTokenExpiration);
     }
 
-    public String createRefreshToken(long kakaoId) {
-        return createToken(kakaoId, "Refresh", refreshTokenExpiration);
+    public String createRefreshToken(long userId) {
+        return createToken(userId, "Refresh", refreshTokenExpiration);
     }
 
-    private String createToken(Long kakaoId, String type, long tokenValidTime) {
+    private String createToken(Long userId, String type, long tokenValidTime) {
         Claims claims = Jwts.claims().setSubject(type);
-        claims.put("kakaoId", kakaoId);
+        claims.put("userId", userId);
 
         return Jwts.builder()
                 .setClaims(claims)

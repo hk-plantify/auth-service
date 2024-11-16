@@ -1,6 +1,6 @@
 package com.plantify.auth.service;
 
-import com.plantify.auth.controller.client.KakaoApiClient;
+import com.plantify.auth.client.KakaoApiClient;
 import com.plantify.auth.domain.dto.response.KakaoInfoResponse;
 import com.plantify.auth.domain.dto.response.LoginResponse;
 import com.plantify.auth.domain.dto.response.KakaoTokenResponse;
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService, AuthInternalService {
             throw new ApplicationException(UserErrorCode.INVALID_USERNAME);
         }
 
-        return userRepository.findByKakaoId(response.id())
+        return userRepository.findById(response.id())
                 .orElseGet(() -> {
                     User newUser = User.builder()
                             .kakaoId(response.id())

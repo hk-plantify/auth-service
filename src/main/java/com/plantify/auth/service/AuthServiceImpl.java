@@ -10,17 +10,15 @@ import com.plantify.auth.domain.entity.User;
 import com.plantify.auth.global.exception.ApplicationException;
 import com.plantify.auth.global.exception.errorcode.AuthErrorCode;
 import com.plantify.auth.global.exception.errorcode.UserErrorCode;
-import com.plantify.auth.jwt.JwtAuthProvider;
 import com.plantify.auth.repository.UserRepository;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class AuthServiceImpl implements AuthService, AuthInternalService {
 
-    private final JwtAuthProvider jwtAuthProvider;
+    private final JwtTokenService jwtTokenService;
     private final KakaoApiClient kakaoApiClient;
     private final UserRepository userRepository;
 
@@ -30,33 +28,27 @@ public class AuthServiceImpl implements AuthService {
         KakaoInfoResponse infoResponse = kakaoApiClient.requestKakaoUserInfo(tokenResponse.accessToken());
 
         User user = findOrCreateMember(infoResponse);
-        String accessToken = jwtAuthProvider.createAccessToken(user.getKakaoId());
-        String refreshToken = jwtAuthProvider.createRefreshToken(user.getKakaoId());
+        String accessToken = jwtTokenService.createAccessToken(user.getUserId());
+        String refreshToken = jwtTokenService.createRefreshToken(user.getUserId());
 
         return LoginResponse.from(user, accessToken, refreshToken);
     }
 
     @Override
-    public String refreshAccessToken(String token) {
-        Long kakaoId = getUserIdFromToken(token);
-        return jwtAuthProvider.createAccessToken(kakaoId);
+    public String refreshAccessToken(String authorizationHeader) {
+        String token = resolveAccessToken(authorizationHeader);
+        Long userId = jwtTokenService.getUserIdFromToken(token);
+        return jwtTokenService.createAccessToken(userId);
     }
 
     @Override
-    public UserResponse getUserIdAndRoleFromToken(String token) {
-        Long kakaoId = getUserIdFromToken(token);
-        User user = userRepository.findByKakaoId(kakaoId)
+    public UserResponse getUserIdAndRoleFromToken(String authorizationHeader) {
+        String token = resolveAccessToken(authorizationHeader);
+        Long userId = jwtTokenService.getUserIdFromToken(token);
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ApplicationException(UserErrorCode.USER_NOT_FOUND));
 
         return UserResponse.from(user);
-    }
-
-    @Override
-    public Long getUserIdFromToken(String token) {
-        if (token == null || !jwtAuthProvider.validateToken(token)) {
-            throw new ApplicationException(AuthErrorCode.INVALID_TOKEN);
-        }
-        return jwtAuthProvider.getClaims(token).get("kakaoId", Long.class);
     }
 
     @Override
@@ -75,5 +67,13 @@ public class AuthServiceImpl implements AuthService {
                             .build();
                     return userRepository.save(newUser);
                 });
+    }
+
+    @Override
+    public String resolveAccessToken(String authorizationHeader) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            throw new ApplicationException(AuthErrorCode.INVALID_TOKEN);
+        }
+        return authorizationHeader.substring(7).trim();
     }
 }

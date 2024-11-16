@@ -38,6 +38,9 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Column(nullable = true)
+    private Long modifiedBy;
+
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();

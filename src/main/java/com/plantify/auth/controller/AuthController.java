@@ -16,24 +16,20 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginResponse>> login(
-            @RequestParam("code") String authorizationCode) {
+    public ApiResponse<LoginResponse> login(@RequestParam("code") String authorizationCode) {
         LoginResponse loginResponse = authService.login(authorizationCode);
-        return ResponseEntity.ok(ApiResponse.ok(loginResponse));
+        return ApiResponse.ok(loginResponse);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<ApiResponse<String>> refreshAccessToken(
-            @RequestHeader("Authorization") String authorizationHeader) {
+    public ApiResponse<String> refreshAccessToken(@RequestHeader("Authorization") String authorizationHeader) {
         String newAccessToken = authService.refreshAccessToken(authorizationHeader);
-        return ResponseEntity.ok(ApiResponse.ok(newAccessToken));
+        return ApiResponse.ok(newAccessToken);
     }
 
     @PostMapping("/validate-token")
-    public ResponseEntity<ApiResponse<UserResponse>> getUserInfo(
-            @RequestHeader("Authorization") String authorizationHeader) {
+    public ApiResponse<UserResponse> getUserInfo(@RequestHeader("Authorization") String authorizationHeader) {
         UserResponse userInfo = authService.getUserIdAndRoleFromToken(authorizationHeader);
-        return ResponseEntity.ok(ApiResponse.ok(userInfo));
+        return ApiResponse.ok(userInfo);
     }
-
 }

@@ -1,6 +1,3 @@
-server:
-  port: 8080
-
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
@@ -26,7 +23,7 @@ oauth:
   kakao:
     client-id: ENC(Bt6eM/fhddJAPXSptpWF3mUjdR6Sf//6w6W9q65IOPS2dp7qOByivWaW5ljFqi7O)
     client-secret: ENC(UkF9iKVwNwfMRDbTqGrrotqxiG75OUOpr0x4z7C52hPBqvkghp5A7bwXdU/aekTD)
-    redirect-uri: ENC(FpTmJ97F17HZmCRMxz1msOS5Sm2S/Myh0Je6xb46CEBXqqnbTx4eZA==)
+    redirect-uri: ENC(W9XxJy6uCWqjtAnuVgh07m2gn7nX2S2/hYaLjmPqx+0lTC53ayMpixFsrKPuPzdQBLnyzH5T2P4EamuXaWt3IjcnYTeLEt67CRozMb6FMi/ZYKrXr9mZr4Cb2SUGydsr)
 
 jwt:
   secret: ENC(bkvH+mRzgfeLK4bZDHmcbfa5etKqItNkUaXmRn7NIFALSTudUWKlDTinBnbU+JYECrp+l/qnofo=)

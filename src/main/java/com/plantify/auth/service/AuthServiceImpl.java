@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService, AuthInternalService {
             throw new ApplicationException(UserErrorCode.INVALID_USERNAME);
         }
 
-        return userRepository.findById(response.id())
+        return userRepository.findByKakaoId(response.id())
                 .orElseGet(() -> {
                     User newUser = User.builder()
                             .kakaoId(response.id())

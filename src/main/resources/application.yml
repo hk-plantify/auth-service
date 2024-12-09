@@ -23,7 +23,7 @@ oauth:
   kakao:
     client-id: ENC(Bt6eM/fhddJAPXSptpWF3mUjdR6Sf//6w6W9q65IOPS2dp7qOByivWaW5ljFqi7O)
     client-secret: ENC(UkF9iKVwNwfMRDbTqGrrotqxiG75OUOpr0x4z7C52hPBqvkghp5A7bwXdU/aekTD)
-    redirect-uri: ENC(W9XxJy6uCWqjtAnuVgh07m2gn7nX2S2/hYaLjmPqx+0lTC53ayMpixFsrKPuPzdQBLnyzH5T2P4EamuXaWt3IjcnYTeLEt67CRozMb6FMi/ZYKrXr9mZr4Cb2SUGydsr)
+    redirect-uri: ENC(SIZlVpvS+mh4XsgMHrhFmQbJWnEXlLGtrwBOoYP0lc45jD+z7hn9zxXwJCCZ7OR2aKtKnyrIQgt7hZsW22JrCUOxxEDnJwvEelttJ8zqjuMb7c5LI0UGRoZcF8voCDOt)
 
 jwt:
   secret: ENC(bkvH+mRzgfeLK4bZDHmcbfa5etKqItNkUaXmRn7NIFALSTudUWKlDTinBnbU+JYECrp+l/qnofo=)

@@ -32,4 +32,10 @@ public class AuthController {
         UserResponse userInfo = authService.getUserIdAndRoleFromToken(authorizationHeader);
         return ApiResponse.ok(userInfo);
     }
+
+    @GetMapping("/users/search")
+    public ResponseEntity<Long> getUserId(@RequestParam String username) {
+        Long userId = authService.getUserId(username);
+        return ResponseEntity.ok(userId);
+    }
 }

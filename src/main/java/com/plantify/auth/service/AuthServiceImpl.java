@@ -76,4 +76,11 @@ public class AuthServiceImpl implements AuthService, AuthInternalService {
         }
         return authorizationHeader.substring(7).trim();
     }
+
+    @Override
+    public Long getUserId(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ApplicationException(UserErrorCode.USER_NOT_FOUND));
+        return user.getUserId();
+    }
 }

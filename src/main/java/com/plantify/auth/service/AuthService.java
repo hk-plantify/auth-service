@@ -10,4 +10,5 @@ public interface AuthService {
     LoginResponse login(String authorizationCode);
     String refreshAccessToken(String authorizationHeader);
     UserResponse getUserIdAndRoleFromToken(String authorizationHeader);
+    Long getUserId(String username);
 }

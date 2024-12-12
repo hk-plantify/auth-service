@@ -26,8 +26,6 @@ oauth:
     redirect-uri: ENC(41XKAZioR80e3+aYCBqSHF3e8sHsXUYLTRFNyCxLSFauugcW+RqXsA==)
 jwt:
   secret: ENC(bkvH+mRzgfeLK4bZDHmcbfa5etKqItNkUaXmRn7NIFALSTudUWKlDTinBnbU+JYECrp+l/qnofo=)
-  access-token-expiration: ENC(/T++6ZbhvDUhaZgscOQ/oKJZzHHk3VQ9)
+  access-token-expiration: ENC(ch/UXDWKupu5PnMpcI3DEg==)
   refresh-token-expiration: ENC(/T++6ZbhvDUhaZgscOQ/oKJZzHHk3VQ9)
-#  ENC(ch/UXDWKupu5PnMpcI3DEg==)
-server:
-  port: 8888
+

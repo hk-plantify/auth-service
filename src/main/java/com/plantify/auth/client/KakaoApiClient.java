@@ -25,20 +25,17 @@ public class KakaoApiClient {
     @Value("${oauth.kakao.client-secret}")
     private String clientSecret;
 
-    @Value("${oauth.kakao.redirect-uri}")
-    private String redirectUri;
-
     private final RestTemplate restTemplate;
 
     public KakaoTokenResponse requestAccessToken(String authorizationCode) {
         String requestUri = "https://kauth.kakao.com/oauth/token";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", clientId);
         body.add("client_secret", clientSecret);
-        body.add("redirect_uri", redirectUri);
         body.add("code", authorizationCode);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
@@ -47,6 +44,7 @@ public class KakaoApiClient {
 
     public KakaoInfoResponse requestKakaoUserInfo(String accessToken) {
         String requestUri = "https://kapi.kakao.com/v2/user/me";
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
         headers.setContentType(MediaType.APPLICATION_JSON);

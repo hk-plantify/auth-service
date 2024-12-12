@@ -23,9 +23,12 @@ oauth:
   kakao:
     client-id: ENC(Bt6eM/fhddJAPXSptpWF3mUjdR6Sf//6w6W9q65IOPS2dp7qOByivWaW5ljFqi7O)
     client-secret: ENC(UkF9iKVwNwfMRDbTqGrrotqxiG75OUOpr0x4z7C52hPBqvkghp5A7bwXdU/aekTD)
-    redirect-uri: ENC(41XKAZioR80e3+aYCBqSHF3e8sHsXUYLTRFNyCxLSFauugcW+RqXsA==)
+    redirect-uri: http://localhost:8888/v1/auth
 jwt:
   secret: ENC(bkvH+mRzgfeLK4bZDHmcbfa5etKqItNkUaXmRn7NIFALSTudUWKlDTinBnbU+JYECrp+l/qnofo=)
   access-token-expiration: ENC(ch/UXDWKupu5PnMpcI3DEg==)
   refresh-token-expiration: ENC(/T++6ZbhvDUhaZgscOQ/oKJZzHHk3VQ9)
 
+client:
+  base:
+    url: ENC(6r5+iURZyGrnWE3rn4C1XXhxZpzilbAqGkb4WdQs0fijyMzoZxHRhA==)
